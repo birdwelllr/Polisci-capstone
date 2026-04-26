@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Protest to Institutional Politics</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2eb;
+    --olive: #4a5240;
+    --olive-light: #7a8c6e;
+    --olive-pale: #c8d4b8;
+    --red: #c0392b;
+    --red-pale: #f2d7d5;
+    --cream: #f5f2eb;
+    --cream-dark: #e8e3d8;
+    --text: #1a1a1a;
+    --text-muted: #5a5a5a;
+    --border: #d0c8b8;
+    --nav-h: 64px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    background: var(--black);
+    display: flex; align-items: center;
+    padding: 0 2rem;
+    z-index: 100;
+    border-bottom: 2px solid var(--olive);
+  }
+
+  .nav-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--olive-pale);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    flex: 1;
+  }
+
+  .nav-links {
+    display: flex; gap: 0; list-style: none;
+  }
+
+  .nav-links li button {
+    background: none; border: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #888;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    transition: color 0.2s;
+    border-left: 1px solid #222;
+  }
+
+  .nav-links li button:hover { color: var(--white); }
+  .nav-links li button.active { color: var(--olive-pale); }
+
+  /* PAGE SYSTEM */
+  .page { display: none; padding-top: var(--nav-h); min-height: 100vh; }
+  .page.active { display: block; }
+
+  /* ===== HOME PAGE ===== */
+  #page-home {
+    background: var(--black);
+    color: var(--white);
+    display: none;
+    flex-direction: column;
+  }
+  #page-home.active { display: flex; }
+
+  .hero {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: calc(100vh - var(--nav-h));
+  }
+
+  .hero-left {
+    padding: 5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid #333;
+  }
+
+  .hero-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--olive-light);
+    margin-bottom: 2rem;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--olive-pale);
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #aaa;
+    max-width: 420px;
+    margin-bottom: 3rem;
+  }
+
+  .hero-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: #555;
+    line-height: 2;
+  }
+
+  .hero-right {
+    padding: 5rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    background: #111;
+    border: 1px solid #2a2a2a;
+    border-left: 3px solid var(--olive);
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .stat-card:hover {
+    background: #161616;
+    border-left-color: var(--olive-pale);
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--olive-pale);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: #777;
+    letter-spacing: 0.05em;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--olive);
+    color: var(--white);
+    border: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.9rem 2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: fit-content;
+  }
+  .cta-btn:hover { background: var(--olive-light); }
+
+  /* ===== CONTENT PAGES ===== */
+  .content-page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 5rem 2rem 6rem;
+  }
+
+  .page-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--olive);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .page-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-title em { font-style: italic; color: var(--olive); }
+
+  .page-intro {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+  }
+
+  h3 {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--olive);
+    margin: 2rem 0 0.75rem;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--text);
+    margin-bottom: 1.2rem;
+  }
+
+  /* CALLOUT BOX */
+  .callout {
+    background: var(--black);
+    color: var(--white);
+    padding: 2rem 2.5rem;
+    margin: 2rem 0;
+    border-left: 4px solid var(--olive-pale);
+  }
+
+  .callout p {
+    color: #ccc;
+    font-size: 15px;
+    margin: 0;
+  }
+
+  .callout strong { color: var(--olive-pale); }
+
+  /* PULL QUOTE */
+  .pull-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--olive);
+    border-left: 3px solid var(--olive-pale);
+    padding-left: 1.5rem;
+    margin: 2.5rem 0;
+  }
+
+  /* SOURCE CARD */
+  .source-card {
+    background: var(--cream-dark);
+    border: 1px solid var(--border);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .source-card .source-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 0.3rem;
+  }
+
+  .source-card .source-detail {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* CHART AREA */
+  .chart-container {
+    background: var(--black);
+    padding: 2.5rem;
+    margin: 2rem 0;
+  }
+
+  .chart-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--olive-pale);
+    margin-bottom: 1.5rem;
+  }
+
+  .bar-group { margin-bottom: 1.8rem; }
+
+  .bar-label {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .bar-track {
+    background: #1a1a1a;
+    height: 32px;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .bar-fill {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 8px;
+  }
+
+  .bar-fill span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--black);
+  }
+
+  .bar-protester { background: var(--olive-pale); }
+  .bar-non { background: #3a3a3a; }
+  .bar-non span { color: #888; }
+
+  .chart-legend {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 12px;
+    color: #777;
+  }
+
+  .legend-dot {
+    width: 12px; height: 12px;
+  }
+
+  /* FINDINGS GRID */
+  .findings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    margin: 2rem 0;
+  }
+
+  .finding-cell {
+    background: var(--cream);
+    padding: 2rem;
+  }
+
+  .finding-pct {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--olive);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .finding-pct.negative { color: var(--red); }
+
+  .finding-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .finding-sig {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    margin-top: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    display: inline-block;
+  }
+
+  .sig-yes { background: var(--olive); color: var(--white); }
+  .sig-no { background: var(--cream-dark); color: var(--text-muted); border: 1px solid var(--border); }
+
+  /* MODEL TABLE */
+  .model-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 13px;
+  }
+
+  .model-table th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid var(--black);
+  }
+
+  .model-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .model-table tr:hover td { background: var(--cream-dark); }
+
+  .sig-stars { color: var(--olive); font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
+
+  /* REFERENCES */
+  .ref-item {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ref-item:last-child { border-bottom: none; }
+
+  /* TIMELINE */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+    margin: 2rem 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 2rem;
+    padding-left: 1.5rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2rem;
+    top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--olive);
+    transform: translateX(50%);
+  }
+
+  .timeline-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--olive);
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-text {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* IMAGE PLACEHOLDER */
+  .img-block {
+    background: var(--black);
+    aspect-ratio: 16/7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .img-block-bg {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      #111 0px, #111 20px,
+      #0d0d0d 20px, #0d0d0d 40px
+    );
+    opacity: 0.5;
+  }
+
+  .img-caption {
+    position: relative;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--olive-pale);
+    text-align: center;
+  }
+
+  .img-sub {
+    position: relative;
+    font-size: 12px;
+    color: #555;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  /* PAGE TRANSITIONS */
+  .page { animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    color: #555;
+    text-align: center;
+    padding: 2rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    border-top: 1px solid #222;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 700px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .findings-grid { grid-template-columns: 1fr; }
+    .nav-title { display: none; }
+    .nav-links li button { padding: 0.5rem 0.6rem; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-title">Capstone Research Project &mdash; Political Science</span>
+  <ul class="nav-links">
+    <li><button onclick="showPage('home')" class="active" id="nav-home">Home</button></li>
+    <li><button onclick="showPage('intro')" id="nav-intro">Introduction</button></li>
+    <li><button onclick="showPage('litreview')" id="nav-litreview">Literature</button></li>
+    <li><button onclick="showPage('design')" id="nav-design">Research Design</button></li>
+    <li><button onclick="showPage('analysis')" id="nav-analysis">Analysis</button></li>
+    <li><button onclick="showPage('conclusion')" id="nav-conclusion">Conclusion</button></li>
+    <li><button onclick="showPage('references')" id="nav-references">References</button></li>
+  </ul>
+</nav>
+
+<!-- ===== HOME ===== -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Capstone Research &bull; Political Science &bull; 2024</div>
+      <h1 class="hero-title">From Protest to <em>Institutional Politics</em></h1>
+      <p class="hero-sub">How participation in the post–October 7 pro-Palestine protest wave was associated with institutional political engagement among Americans in 2024.</p>
+      <button class="cta-btn" onclick="showPage('intro')">Begin Reading &rarr;</button>
+      <div class="hero-meta" style="margin-top:2rem;">
+        Data: ANES 2024 Time Series Study &bull; N = 2,562 sympathizers<br>
+        Methods: Weighted logistic regression &bull; Average marginal effects
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-eyebrow" style="color:#555; margin-bottom:0.5rem;">Key Findings</div>
+      <div class="stat-card" onclick="showPage('analysis')">
+        <div class="stat-number">+13pp</div>
+        <div class="stat-label">increase in contacting federal officials among protesters</div>
+      </div>
+      <div class="stat-card" onclick="showPage('analysis')">
+        <div class="stat-number">+24pp</div>
+        <div class="stat-label">increase in volunteering among protesters</div>
+      </div>
+      <div class="stat-card" onclick="showPage('analysis')">
+        <div class="stat-number">12,400</div>
+        <div class="stat-label">pro-Palestine protest events in the U.S., Oct 2023–June 2024</div>
+      </div>
+      <div class="stat-card" onclick="showPage('analysis')">
+        <div class="stat-number">1.5M+</div>
+        <div class="stat-label">estimated participants in the protest wave</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== INTRODUCTION ===== -->
+<div class="page" id="page-intro">
+  <div class="content-page">
+    <div class="page-label">01 &mdash; Introduction</div>
+    <h1 class="page-title">Why Does <em>Protest</em> Matter to Formal Politics?</h1>
+    <p class="page-intro">This paper asks how participation in the post–October 7 protest wave was associated with institutional political engagement among Americans sympathetic to the Palestinian cause in 2024 — and what that relationship reveals about how social movements interact with democratic institutions.</p>
+
+    <h2>The Research Question</h2>
+    <p>The protest wave that followed October 7, 2023 became one of the largest and most sustained U.S. mobilizations around a foreign-policy issue in recent history. Using Crowd Counting Consortium data, Erica Chenoweth and her coauthors report nearly 12,400 pro-Palestine protest events and at least 1.5 million participants in the United States between October 7, 2023 and June 7, 2024 — the largest and most sustained U.S. protest wave sparked by a foreign event since the consortium began systematic counting in 2017.</p>
+
+    <div class="callout">
+      <p><strong>Research Question:</strong> How was participation in the post–October 7 protest wave associated with institutional political engagement — voting, contacting officials, attending meetings, and volunteering — among Americans sympathetic to the Palestinian cause in 2024?</p>
+    </div>
+
+    <h2>Why This Matters</h2>
+    <p>Scholars often debate whether protest pulls people away from institutional channels or instead pushes them toward voting, lobbying, and pressure on elected officials. This debate is not merely academic. If protest substitutes for institutional engagement, then large-scale movements may generate energy that never reaches the formal levers of democratic power. If protest and institutional engagement are complementary, however, then social movements may serve as an on-ramp to sustained civic participation.</p>
+
+    <p>The post–October 7 case is particularly valuable because Palestine solidarity activism has often been portrayed as oppositional to institutional politics — as a movement that rejects rather than engages the formal system. This paper tests that characterization directly using nationally representative survey data.</p>
+
+    <div class="pull-quote">"Movement politics and formal democratic participation may be mutually reinforcing rather than mutually exclusive."</div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-date">October 7, 2023</div>
+        <div class="timeline-text">Hamas attacks on Israel; beginning of the Gaza conflict and the Israeli military response.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Oct 2023 – June 2024</div>
+        <div class="timeline-text">Nearly 12,400 pro-Palestine protest events across the United States, including major campus encampments and marches.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Aug – Nov 2024</div>
+        <div class="timeline-text">ANES 2024 pre-election survey fielded, capturing Palestine-related attitudes before the election.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">November 5, 2024</div>
+        <div class="timeline-text">U.S. Presidential election. "Uncommitted" movement and Gaza-focused electoral organizing throughout the Democratic primary season.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Nov 2024 – Feb 2025</div>
+        <div class="timeline-text">ANES post-election reinterview, capturing protest participation, voting, and other civic engagement outcomes.</div>
+      </div>
+    </div>
+
+    <h2>The Argument</h2>
+    <p>This paper argues that, among respondents sympathetic to Palestinians, participation in protest was associated with higher levels of institutional political engagement — especially contacting federal officials, attending public meetings, and volunteering — but was not significantly associated with voting. The strongest defensible claim is association rather than a clean causal effect, because the evidence comes from observational survey data. Nonetheless, the findings speak clearly to the question of whether protest and institutional politics are complements or substitutes in the case of Palestine solidarity activism in 2024.</p>
+
+    <div style="display:flex; gap:1rem; margin-top:2rem;">
+      <button class="cta-btn" onclick="showPage('litreview')">Literature Review &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== LITERATURE REVIEW ===== -->
+<div class="page" id="page-litreview">
+  <div class="content-page">
+    <div class="page-label">02 &mdash; Literature Review</div>
+    <h1 class="page-title">What Do We <em>Already Know?</em></h1>
+    <p class="page-intro">Three strands of scholarship inform this project: research on protest and electoral outcomes, research on political participation repertoires, and issue-specific work on the Palestine solidarity movement in the United States.</p>
+
+    <h2>Protest and Electoral Politics</h2>
+    <p>One major strand of scholarship argues that protest can shape electoral and institutional outcomes. Gillion and Soule analyze congressional-district protest, electoral outcomes, and challenger entry, finding that liberal protests are associated with higher Democratic two-party vote share, while conservative protests track Republican vote share. They also argue that protest can highlight incumbents' failures and encourage challengers to enter later races.</p>
+
+    <p>More recently, Klein Teeselink and Melios study the 2020 Black Lives Matter protests and find that protest activity significantly increased Democratic vote share in affected counties. These aggregate-level studies support the view that protest can spill into electoral politics rather than remaining outside it.</p>
+
+    <div class="source-card">
+      <div class="source-title">Gillion & Soule (2018)</div>
+      <div class="source-detail">"The Impact of Protest on Elections in the United States." <em>Social Science Quarterly</em> 99, no. 5: 1649–1664. — Key finding: liberal protests associated with increased Democratic vote share at the district level.</div>
+    </div>
+
+    <div class="source-card">
+      <div class="source-title">Klein Teeselink & Melios (2025)</div>
+      <div class="source-detail">"Weather to Protest: The Effect of Black Lives Matter Protests on the 2020 Presidential Election." <em>Political Behavior</em> 47: 1829–1851. — Key finding: BLM protest activity significantly increased Democratic vote share in affected counties.</div>
+    </div>
+
+    <h2>The Skeptical View: Null Effects on Mobilization</h2>
+    <p>A second strand of research is more skeptical. Engist and Schafmeister examine monthly voter registration data from 2,136 U.S. counties in the context of Black Lives Matter and conclude that local protest exposure did not increase voter registration in the aggregate. They also report similarly insignificant effects across party lines and when accounting for protest violence. This warns against assuming that a large protest wave automatically produces broader institutional engagement.</p>
+
+    <div class="source-card">
+      <div class="source-title">Engist & Schafmeister (2022)</div>
+      <div class="source-detail">"Do Political Protests Mobilize Voters? Evidence from the Black Lives Matter Protests." <em>Public Choice</em> 193, nos. 3–4: 293–313. — Key finding: BLM protest exposure did not significantly increase voter registration in U.S. counties.</div>
+    </div>
+
+    <h2>Participation Repertoires</h2>
+    <p>Oser offers a useful framework for reconciling these mixed findings. Her argument is that researchers should study how individuals combine different political acts within broader participation repertoires. In that framework, protest is one political act among many, and the key empirical question becomes whether protesters are also more likely to contact officials, attend meetings, volunteer, sign petitions, or vote. This approach is especially helpful here because Palestine solidarity activism has often been portrayed as oppositional to institutional politics, when in fact the two may coexist and reinforce one another.</p>
+
+    <div class="pull-quote">"Protest is best understood as one act within a broader repertoire of political participation, not as an alternative to institutional engagement." — Oser (2022)</div>
+
+    <div class="source-card">
+      <div class="source-title">Oser (2022)</div>
+      <div class="source-detail">"Protest as One Political Act in Individuals' Participation Repertoires: Latent Class Analysis and Political Participant Types." <em>American Behavioral Scientist</em> 66, no. 4: 510–532. — Key contribution: framework for studying protest as part of a broader participation portfolio.</div>
+    </div>
+
+    <h2>Mobilization, Repression, and the Palestine Case</h2>
+    <p>Classic work by Opp and Roehl argues that repression can deter protest by raising the costs of action, but that effects depend on broader incentives and mobilizing conditions. In the specific case of Palestine solidarity activism, Deeb and Winegar situate the 2023–2024 campus movement within a longer history of activism and repression in U.S. academia, arguing that resistance and repression have repeatedly fed one another — meaning that institutional barriers may demobilize some while intensifying commitment among others.</p>
+
+    <p>Chenoweth and her coauthors describe the post–October 7 movement as especially large and largely nonviolent by Crowd Counting Consortium measures, providing the empirical baseline against which individual-level survey analysis can be situated.</p>
+
+    <div style="display:flex; gap:1rem; margin-top:2rem;">
+      <button class="cta-btn" onclick="showPage('design')">Research Design &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RESEARCH DESIGN ===== -->
+<div class="page" id="page-design">
+  <div class="content-page">
+    <div class="page-label">03 &mdash; Research Design</div>
+    <h1 class="page-title">Data, Variables, <em>&amp; Method</em></h1>
+    <p class="page-intro">This project uses the ANES 2024 Time Series Study, the American National Election Studies' flagship survey, which uniquely combines pre-election measures of Palestine-related attitudes with post-election measures of protest participation and civic engagement.</p>
+
+    <h2>The Dataset</h2>
+    <p>The American National Election Studies (ANES) 2024 Time Series Study fielded its pre-election survey from August 3 to November 5, 2024 and its post-election reinterview from November 7, 2024 to February 17, 2025. The combined sample includes 5,521 respondents. That timing makes the study especially valuable: it captures Palestine-related attitudes before the election and protest participation and civic engagement outcomes after it.</p>
+
+    <div class="callout">
+      <p><strong>Why ANES?</strong> No other nationally representative survey in 2024 simultaneously measured pro-Palestine attitudes <em>and</em> protest participation and institutional engagement outcomes. The ANES pre/post design allows us to study the intersection of issue sympathy and civic behavior across the full adult population.</p>
+    </div>
+
+    <h2>Defining the Subgroup</h2>
+    <p>The analysis focuses on a subgroup of respondents who can reasonably be classified as pro-Palestine sympathizers. A respondent is included if they meet at least one of three criteria:</p>
+
+    <div class="findings-grid" style="grid-template-columns: 1fr 1fr 1fr; margin:1.5rem 0;">
+      <div class="finding-cell">
+        <div class="finding-pct" style="font-size:1.8rem;">V241404</div>
+        <div class="finding-desc">Favors U.S. humanitarian aid to Palestinians in Gaza</div>
+      </div>
+      <div class="finding-cell">
+        <div class="finding-pct" style="font-size:1.8rem;">V241409x</div>
+        <div class="finding-desc">Sides more with Palestinians on the 1–8 Israel/Palestine sympathy scale</div>
+      </div>
+      <div class="finding-cell">
+        <div class="finding-pct" style="font-size:1.8rem;">V241410</div>
+        <div class="finding-desc">Approves of campus protests against the war in Gaza</div>
+      </div>
+    </div>
+
+    <p>This broad, inclusive definition yields <strong>2,562 respondents</strong> after dropping observations with missing post-election survey weights. This approach improves on a simple "activists versus everyone else" comparison because it compares protesters with non-protesters who already share broadly similar issue preferences.</p>
+
+    <h2>Key Variables</h2>
+
+    <h3>Independent Variable</h3>
+    <p><strong>Protest participation (V242029):</strong> Whether the respondent reported joining a protest march, rally, or demonstration in the past 12 months (1 = yes, 0 = no). Within the pro-Palestine sympathizer subgroup, 179 respondents in the full sample reported protesting.</p>
+
+    <h3>Dependent Variables</h3>
+    <table class="model-table">
+      <thead>
+        <tr>
+          <th>Variable</th>
+          <th>ANES Item</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Contacted federal elected official</td><td>V242036</td><td>Primary</td></tr>
+        <tr><td>Voted in 2024 election</td><td>V242065</td><td>Primary</td></tr>
+        <tr><td>Attended a public meeting</td><td>V242034</td><td>Secondary</td></tr>
+        <tr><td>Volunteered</td><td>V242035</td><td>Secondary</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Control Variables</h3>
+    <p>All models control for party identification (V241227x, 7-point scale), ideology (V241177, 7-point liberal-conservative scale), education (V241465x, 5-category summary), sex (V241550), and race/ethnicity (V241501x).</p>
+
+    <h2>Analytical Strategy</h2>
+    <p>The analysis proceeds in two steps. First, weighted descriptive comparisons establish baseline differences between protesters and non-protesters in the subgroup. Second, survey-weighted logistic regression models (quasibinomial family) test whether those differences persist after controls. Average marginal effects are reported to facilitate substantive interpretation. All models use the ANES post-election combined weight (V240103b) as required by ANES documentation when post-election variables are included.</p>
+
+    <div class="callout">
+      <p><strong>A note on causality:</strong> Because this is an observational design, the findings are described as associations rather than causal effects. Respondents who protested may have been more politically engaged before October 7, 2023. Longitudinal data with pre-protest baselines would be needed to make stronger causal claims.</p>
+    </div>
+
+    <div style="display:flex; gap:1rem; margin-top:2rem;">
+      <button class="cta-btn" onclick="showPage('analysis')">View Analysis &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== ANALYSIS ===== -->
+<div class="page" id="page-analysis">
+  <div class="content-page">
+    <div class="page-label">04 &mdash; Analysis</div>
+    <h1 class="page-title">What the <em>Data Show</em></h1>
+    <p class="page-intro">Among pro-Palestine sympathizers, protest participants were dramatically more engaged across nearly every civic dimension examined — with one important exception.</p>
+
+    <h2>Descriptive Results</h2>
+    <p>The chart below compares weighted participation rates between pro-Palestine sympathizers who reported protesting and those who did not, across four forms of political engagement.</p>
+
+    <div class="chart-container" id="chart-desc">
+      <div class="chart-title">Table 1 — Weighted Participation Rates by Protest Status (Pro-Palestine Sympathizers)</div>
+
+      <div class="bar-group">
+        <div class="bar-label"><span>Contacted Federal Official</span></div>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div class="bar-track" style="margin-bottom:3px;">
+            <div class="bar-fill bar-protester" id="b1p" style="width:0%"><span>35%</span></div>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill bar-non" id="b1n" style="width:0%"><span>8%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-label"><span>Attended Public Meeting</span></div>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div class="bar-track" style="margin-bottom:3px;">
+            <div class="bar-fill bar-protester" id="b2p" style="width:0%"><span>26%</span></div>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill bar-non" id="b2n" style="width:0%"><span>9%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-label"><span>Volunteered</span></div>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div class="bar-track" style="margin-bottom:3px;">
+            <div class="bar-fill bar-protester" id="b3p" style="width:0%"><span>58%</span></div>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill bar-non" id="b3n" style="width:0%"><span>25%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bar-group">
+        <div class="bar-label"><span>Voted in 2024</span></div>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <div class="bar-track" style="margin-bottom:3px;">
+            <div class="bar-fill bar-protester" id="b4p" style="width:0%"><span>15%</span></div>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill bar-non" id="b4n" style="width:0%"><span>22%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--olive-pale);"></div> Protesters</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#3a3a3a;"></div> Non-Protesters</div>
+      </div>
+    </div>
+
+    <p>Protesters were more than four times as likely as non-protesters to have contacted a federal elected official (35% vs. 8%). They were also considerably more likely to attend a public meeting (26% vs. 9%) and volunteer (58% vs. 25%). The one exception is voting: non-protesters reported modestly higher voting rates (22% vs. 15%).</p>
+
+    <h2>Multivariate Results</h2>
+    <p>The following models test whether these patterns persist after controlling for party identification, ideology, education, sex, and race. Average marginal effects (AMEs) are reported — these represent the change in probability associated with being a protester, holding all other variables at their observed values.</p>
+
+    <div class="findings-grid">
+      <div class="finding-cell">
+        <div class="finding-pct">+13pp</div>
+        <div class="finding-desc">Higher probability of contacting a federal elected official</div>
+        <div class="finding-sig sig-yes">p &lt; 0.001 &bull; Significant</div>
+      </div>
+      <div class="finding-cell">
+        <div class="finding-pct">+11pp</div>
+        <div class="finding-desc">Higher probability of attending a public meeting</div>
+        <div class="finding-sig sig-yes">p &lt; 0.01 &bull; Significant</div>
+      </div>
+      <div class="finding-cell">
+        <div class="finding-pct">+24pp</div>
+        <div class="finding-desc">Higher probability of volunteering for a campaign or organization</div>
+        <div class="finding-sig sig-yes">p &lt; 0.001 &bull; Significant</div>
+      </div>
+      <div class="finding-cell">
+        <div class="finding-pct negative">&minus;6pp</div>
+        <div class="finding-desc">Lower probability of voting — but this difference is <em>not statistically significant</em> after controls</div>
+        <div class="finding-sig sig-no">p = 0.25 &bull; Not Significant</div>
+      </div>
+    </div>
+
+    <h3>Model 1: Contacting a Federal Official</h3>
+    <p>Protest participation is the strongest predictor in the model (AME = +0.13, p &lt; 0.001). Education is also a significant positive predictor, consistent with long-standing findings that higher education is associated with greater civic engagement. Notably, party identification and ideology are not significant — meaning the protest effect is not simply a proxy for partisanship.</p>
+
+    <table class="model-table">
+      <thead><tr><th>Predictor</th><th>AME</th><th>Significance</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Protest (yes vs. no)</strong></td><td><strong>+0.127</strong></td><td><span class="sig-stars">***</span></td></tr>
+        <tr><td>Education</td><td>+0.025</td><td><span class="sig-stars">**</span></td></tr>
+        <tr><td>Party ID</td><td>−0.004</td><td>n.s.</td></tr>
+        <tr><td>Ideology</td><td>−0.011</td><td>n.s.</td></tr>
+        <tr><td>Female</td><td>−0.010</td><td>n.s.</td></tr>
+        <tr><td>Race</td><td>−0.001</td><td>n.s.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Model 2: Voting in 2024</h3>
+    <p>Protest participation is not a significant predictor of voting (AME = −0.056, p = 0.25). Two other findings stand out. First, education is a highly significant <em>negative</em> predictor of voting — inverting the standard relationship. More educated pro-Palestine sympathizers were less likely to vote. One plausible interpretation is that educated activists were more aware of and alienated by both major candidates' positions on Gaza, leading some to abstain or cast third-party ballots. Second, race is a significant positive predictor of voting.</p>
+
+    <table class="model-table">
+      <thead><tr><th>Predictor</th><th>AME</th><th>Significance</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Protest (yes vs. no)</strong></td><td><strong>−0.056</strong></td><td>n.s.</td></tr>
+        <tr><td>Education</td><td>−0.076</td><td><span class="sig-stars">***</span></td></tr>
+        <tr><td>Race</td><td>+0.031</td><td><span class="sig-stars">***</span></td></tr>
+        <tr><td>Party ID</td><td>+0.001</td><td>n.s.</td></tr>
+        <tr><td>Ideology</td><td>−0.007</td><td>n.s.</td></tr>
+        <tr><td>Female</td><td>−0.001</td><td>n.s.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <p><strong>The education-voting reversal</strong> is one of the most striking findings in this analysis. In virtually every standard model of political participation, education is a positive predictor of turnout. Among pro-Palestine sympathizers in 2024, that relationship flips — suggesting a distinctive mode of disenchanted but organizationally active engagement among educated activists who may have withheld or redirected their electoral participation as a form of political expression.</p>
+    </div>
+
+    <h3>Models 3 &amp; 4: Meeting Attendance and Volunteering</h3>
+    <p>Both secondary outcomes reinforce the core finding. Protest is associated with an 11 percentage point increase in attending a public meeting (p &lt; 0.01) and a 24 percentage point increase in volunteering (p &lt; 0.001). Education is again a significant positive predictor of both outcomes. Party identification, ideology, and other controls are not significant.</p>
+
+    <div class="pull-quote">"Among pro-Palestine sympathizers, those who protested were also more likely to lobby, organize, and volunteer — suggesting the movement reinforced and deepened civic engagement rather than displacing it."</div>
+
+    <div style="display:flex; gap:1rem; margin-top:2rem;">
+      <button class="cta-btn" onclick="showPage('conclusion')">Conclusion &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CONCLUSION ===== -->
+<div class="page" id="page-conclusion">
+  <div class="content-page">
+    <div class="page-label">05 &mdash; Conclusion &amp; Limitations</div>
+    <h1 class="page-title">What It <em>Means</em></h1>
+    <p class="page-intro">Protest participation among pro-Palestine sympathizers in 2024 was not a substitute for institutional politics — it was, for many, the beginning of a broader and more sustained engagement with the formal channels of American democratic life.</p>
+
+    <h2>Summary of Findings</h2>
+    <p>This paper set out to ask how participation in the post–October 7 protest wave was associated with institutional political engagement among Americans sympathetic to the Palestinian cause in 2024. The findings are consistent across three of the four outcomes examined. Among pro-Palestine sympathizers, protest participants were substantially more likely than non-participants to contact a federal elected official, attend a public meeting, and volunteer — even after controlling for party identification, ideology, education, gender, and race.</p>
+
+    <p>The relationship between protest and voting tells a more complicated story. The raw descriptive comparison suggested protesters were less likely to vote, but this difference disappears in the multivariate model. Protest is neither a significant positive nor negative predictor of turnout within this subgroup. What does predict lower turnout is education — a finding that inverts the standard relationship between educational attainment and electoral participation.</p>
+
+    <h2>Theoretical Implications</h2>
+    <p>These findings support Oser's participation repertoire framework. Those who protested were also more likely to lobby, organize, and volunteer — a pattern suggesting the movement reinforced and deepened civic engagement rather than displacing it into purely expressive channels. The findings also contribute to the mixed literature on protest and electoral mobilization: unlike some aggregate-level studies that find protest increases turnout, this individual-level analysis finds no significant relationship between protest and voting.</p>
+
+    <p>This distinction matters. The political consequences of the post–October 7 movement may have been felt more through direct pressure on elected officials than through the ballot box — at least in the short term. That is itself a theoretically significant finding: it suggests a movement that was organizationally sophisticated and institutionally oriented without being electorally oriented in the conventional sense.</p>
+
+    <h2>Limitations</h2>
+
+    <h3>Observational Design</h3>
+    <p>Because the ANES 2024 is a cross-sectional survey, the relationships estimated here are associations, not causal effects. Respondents who protested may have been more politically engaged before October 7, and the protest measure may be picking up a pre-existing disposition toward civic activism. Longitudinal data with pre-protest baselines would be needed for stronger causal claims.</p>
+
+    <h3>Imprecise Protest Measure</h3>
+    <p>The ANES protest item asks about any protest in the past 12 months — not Palestine-specific protest. A respondent who marched for abortion rights would be coded identically to a Gaza solidarity demonstrator. That said, this limitation is mitigated by restricting the analysis to pro-Palestine sympathizers, making it more likely that their protest activity overlapped with the relevant movement.</p>
+
+    <h3>Subgroup Definition</h3>
+    <p>The broad, inclusive definition of pro-Palestine sympathizer (meeting any one of three criteria) yields a large subgroup. A narrower definition — requiring all three criteria, or only strong sympathies — might produce sharper results. Future work should test sensitivity to this coding choice.</p>
+
+    <h3>Voting Measure Limitations</h3>
+    <p>The ANES voting item does not capture vote choice. The negative education-voting relationship may partly reflect educated respondents who turned out but voted third-party or left the presidential line blank — behavior that the binary voting measure cannot distinguish from non-participation.</p>
+
+    <h3>Underrepresented Communities</h3>
+    <p>The ANES may underrepresent some communities particularly active in the movement, including college students, recent immigrants, and Arab and Muslim Americans. The race/ethnicity summary variable does not include a distinct Middle Eastern or North African category, limiting precision for one of the most visible communities in Palestine solidarity activism.</p>
+
+    <h2>Future Directions</h2>
+    <p>Longitudinal data tracking respondents before and after October 7 would allow stronger causal claims. Richer vote choice data would allow researchers to examine electoral defection. And qualitative or ethnographic work on organizational networks would help explain the mechanisms through which protest translated into the high rates of official contact and volunteering observed here.</p>
+
+    <div class="pull-quote">"What the 2024 data make clear is that the movement left a measurable mark not only on the streets but on the political participation patterns of the Americans it mobilized."</div>
+
+    <div style="display:flex; gap:1rem; margin-top:2rem;">
+      <button class="cta-btn" onclick="showPage('references')">References &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== REFERENCES ===== -->
+<div class="page" id="page-references">
+  <div class="content-page">
+    <div class="page-label">06 &mdash; References</div>
+    <h1 class="page-title">Works <em>Cited</em></h1>
+    <p class="page-intro">All sources follow Chicago Manual of Style (17th edition) citation format. Academic sources are listed first, followed by data and institutional sources.</p>
+
+    <h2>Academic Sources</h2>
+
+    <div class="ref-item">Chenoweth, Erica, Soha Hammam, Jeremy Pressman, and Jay Ulfelder. "Protests in the United States on Palestine and Israel, 2023–2024." <em>Social Movement Studies</em> (2024): 1–14.</div>
+
+    <div class="ref-item">Deeb, Lara, and Jessica Winegar. "Resistance to Repression and Back Again: The Movement for Palestinian Liberation in US Academia." <em>Middle East Critique</em> 33, no. 3 (2024): 313–334.</div>
+
+    <div class="ref-item">Engist, Oliver, and Felix Schafmeister. "Do Political Protests Mobilize Voters? Evidence from the Black Lives Matter Protests." <em>Public Choice</em> 193, nos. 3–4 (2022): 293–313.</div>
+
+    <div class="ref-item">Gillion, Daniel Q., and Sarah A. Soule. "The Impact of Protest on Elections in the United States." <em>Social Science Quarterly</em> 99, no. 5 (2018): 1649–1664.</div>
+
+    <div class="ref-item">Klein Teeselink, Bouke, and Georgios Melios. "Weather to Protest: The Effect of Black Lives Matter Protests on the 2020 Presidential Election." <em>Political Behavior</em> 47 (2025): 1829–1851.</div>
+
+    <div class="ref-item">Opp, Karl-Dieter, and Wolfgang Roehl. "Repression, Micromobilization, and Political Protest." <em>Social Forces</em> 69, no. 2 (1990): 521–547.</div>
+
+    <div class="ref-item">Oser, Jennifer. "Protest as One Political Act in Individuals' Participation Repertoires: Latent Class Analysis and Political Participant Types." <em>American Behavioral Scientist</em> 66, no. 4 (2022): 510–532.</div>
+
+    <h2>Data Sources</h2>
+
+    <div class="ref-item">American National Election Studies. <em>ANES 2024 Time Series Study Full Release User Guide and Codebook.</em> August 8, 2025. https://electionstudies.org.</div>
+
+    <div class="ref-item">Booth, Ruby Belle, and Alberto Medina. "Youth Are Taking Civic Action, But Need Opportunities and Support to Overcome Socioeconomic Barriers." CIRCLE, September 30, 2025. https://circle.tufts.edu.</div>
+
+    <div class="ref-item">Crowd Counting Consortium. Protest event data compiled and reported in Chenoweth et al. (2024). https://sites.google.com/view/crowdcountingconsortium.</div>
+
+    <h2>A Note on Methods</h2>
+    <p>All statistical analysis was conducted in R (version 4.x) using the <em>survey</em>, <em>tidyverse</em>, and <em>margins</em> packages. Survey-weighted logistic regression models used a quasibinomial family and the ANES post-election combined weight (V240103b). The pro-Palestine sympathizer subgroup (N = 2,562) was defined as respondents meeting at least one of three criteria: favoring humanitarian aid to Palestinians (V241404), siding with Palestinians on the sympathy scale (V241409x &gt; 4), or approving of campus protests against the war in Gaza (V241410 = 1 or 2).</p>
+  </div>
+</div>
+
+<footer>
+  From Protest to Institutional Politics &mdash; Capstone Research Project &mdash; Political Science &mdash; 2024
+</footer>
+
+<script>
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.getElementById('nav-' + id).classList.add('active');
+    window.scrollTo(0, 0);
+    if (id === 'analysis') {
+      setTimeout(animateBars, 300);
+    }
+  }
+
+  function animateBars() {
+    const bars = [
+      { id: 'b1p', w: 35 }, { id: 'b1n', w: 8 },
+      { id: 'b2p', w: 26 }, { id: 'b2n', w: 9 },
+      { id: 'b3p', w: 58 }, { id: 'b3n', w: 25 },
+      { id: 'b4p', w: 15 }, { id: 'b4n', w: 22 },
+    ];
+    bars.forEach((b, i) => {
+      setTimeout(() => {
+        const el = document.getElementById(b.id);
+        if (el) el.style.width = b.w + '%';
+      }, i * 80);
+    });
+  }
+</script>
+</body>
+</html>
